@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>My Page</title>
+  </head>
+  <body>
+    <div class="general_container">
+        <header>
+            <div class="header_container">
+                <h1>Les petits plats</h1>
+            </div>
+
+        </header>
+<!-- CONTENEUR BAR DE RECHERCHE -->
+        <section>
+            <div class="searchtool_container">
+                <form>
+                    <input type="text" id="searchbar" name="searchbar" class="searchbar" placeholder="Rechercher une recette">
+                    <button class="button_search"><img src="./assets/icons/magnifying-glass-solid.svg"></img></button>
+                </form>
+            </div>
+        </section>
+
+        <!-- CONTENEUR DES OPTIONS DE FILTRE -->
+        <section>
+          <div class="option_filter__container">
+            <ul id="option_filter__list" class="option_filter__list"></ul>
+          </divc>
+          <div class="filter_container">
+            <div id="one" class="filter_content filter1">
+                  <form>
+                    <input type="text" id="option1" name="option1" class="filter filter1" placeholder="Ingrédient">
+                    <button id="btn_one" class="button_filter">▼</button>
+                </form>
+                <div id="optin1_list" class="optin_list filter1">
+                  <ul id="optin1_list_ul" class="optin_list_ul">
+
+                  </ul>
+                </div>
+            </div>
+
+            <div id="one_active" class="filter_content__active filter1 hidden">
+              <form>
+                <input type="text" id="option1" name="option1" class="filter filter1" placeholder="Ingrédient">
+                <button id="btn_one__act" class="button_filter">▲</button>
+            </form>
+            <div class="filter_list">
+              <ul id="list_one">
+
+              </ul>
+            </div>
+        </div>
+
+
+            <div id="two" class="filter_content filter2">
+                  <form>
+                    <input type="text" id="option2" name="option2" class="filter filter2" placeholder="Appareils">
+                    <button id="btn_two" class="button_filter">▼</button>
+                </form>
+                <div id="optin2_list" class="optin_list filter2">
+                  <ul id="optin2_list_ul" class="optin_list_ul">
+
+                  </ul>
+                </div>
+            </div>
+            
+            <div id="two_active" class="filter_content__active filter2 hidden">
+              <form>
+                <input type="text" id="option2bi" name="option2" class="filter filter2" placeholder="Appareils">
+                <button id="btn_two__act" class="button_filter">▲</button>
+            </form>
+            <div class="filter_list">
+              <ul id="list_two">
+     
+              </ul>
+            </div>
+        </div>
+
+            <div id="three" class="filter_content filter3">
+              <form>
+                <input type="text" id="option3" name="option3" class="filter filter3" placeholder="Ustensiles">
+                <button id="btn_three" class="button_filter">▼</button>
+              </form>
+              <div id="optin3_list" class="optin_list filter3">
+                <ul id="optin3_list_ul" class="optin_list_ul">
+
+                </ul>
+              </div>
+          </div>
+
+          <div id="three_active" class="filter_content__active filter3 hidden">
+            <form>
+              <input type="text" id="option3" name="option3" class="filter filter3" placeholder="Ustensiles">
+              <button id="btn_three__act" class="button_filter">▲</button>
+            </form>
+            <div class="filter_list">
+              <ul id="list_three">
+
+              </ul>
+            </div>
+        </div>
+          </div>
+        </section>
+<!-- CONTENEUR DES RECETTES  -->
+        <main>
+          <div id="recipe_container" class="recipe_container">
+
+<!-- Fiche d'une recette -->
+
+<!-- Fin fiche d'une recette -->
+
+
+          </div>      
+        </main>
+    </div>
+  </body>
+
+  <script src="./js/btn.js"></script>
+  <script src="./js/recipes.js"></script>
+</html>

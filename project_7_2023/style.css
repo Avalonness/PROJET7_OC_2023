@@ -1,0 +1,292 @@
+/* ------------------------
+        IMPORT
+  --------------------------*/
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,300;1,400&display=swap');
+
+/* ------------------------
+        RESET CSS
+  --------------------------*/
+html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,iframe,hr,h1,h2,h3,h4,h5,h6{margin:0;padding:0}h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal}ul{list-style:none}button,input,select{margin:0}html{box-sizing:border-box}*,*::before,*::after{box-sizing:inherit}img,video{height:auto;max-width:100%}iframe{border:0}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+/* ------------------------
+        GENERAL
+  --------------------------*/
+
+html {
+    width: 100%;
+}
+
+.general_container {
+    width: 70%;
+    margin: auto;
+}
+
+h1 
+{
+    font-size: 36px;
+    color: #D04F4F;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: bold;
+}
+
+*::-webkit-scrollbar,
+*::-webkit-scrollbar-thumb {
+  width: 26px;
+  border-radius: 13px;
+  background-clip: padding-box;
+  border: 10px solid transparent;
+}
+
+*::-webkit-scrollbar-thumb {        
+  box-shadow: inset 0 0 0 10px;
+}
+/* ------------------------
+            HEADER
+  --------------------------*/
+
+  .header_container {
+    display: flex;
+    justify-content: center;
+    padding-top: 30px;
+  }
+
+  /* ------------------------
+            SEARCH TOOL
+  --------------------------*/
+
+  .searchtool_container {
+    padding-top: 25px;
+    font-family: 'Lato', sans-serif;
+    font-size: 18px;
+  }
+
+  .searchbar {
+    background-color: #E7E7E7;
+    border: none;
+    width: 97%;
+    padding: 15px;
+  }
+
+  .searchbar:active {
+    border: none;
+
+  }
+
+  .button_search {
+    display: inline-block;
+    padding: 15px;
+    width: 3%;
+    border: none;
+    background-color: #E7E7E7;
+
+  }
+
+
+  .searchtool_container form {
+    display: flex;
+  }
+
+  
+  /* ------------------------
+            FILTER
+  --------------------------*/
+
+  .filter_container {
+    padding-top: 20px;
+    width: 100%;
+    display: flex;
+  }
+
+  .filter_content {
+    width: 20%;
+    color: white;
+    border-radius: 5px;
+    margin-right: 15px;
+    padding: 5px;
+    height: 55px;
+  }
+
+  .option_filter__list{
+    display: flex;
+    padding-top: 15px;
+    flex-wrap: wrap;
+}
+
+.option_filter__list li{
+  display: flex;
+  margin-right: 15px;
+  margin-bottom: 10px;
+  padding: 15px;
+  color: aliceblue;
+  border-radius: 10px;
+  text-transform: capitalize;
+  align-items: center;
+}
+
+  .filter_content form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filter{
+    color: white;
+    border: none;
+    padding: 15px;
+  }
+
+  .filter::placeholder {
+    color: aliceblue;
+    font-weight: bold;
+  }
+
+  .button_filter {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: aliceblue;
+  }
+  /* Color */
+
+  .filter1 {
+    background-color: #3282F7;
+  }
+
+  .filter2 {
+    background-color: #68D9A4;
+  }
+
+  .filter3 {
+    background-color: #ED6454;
+  }
+
+  .hidden{
+    display: none;
+  }
+
+  .filter_content__active{
+    width: 50%;
+    border-radius: 5px;
+    margin-right: 15px;
+    padding: 5px;
+
+  }
+
+  .filter_content__active form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .filter_content__active form input {
+    width: 100%;
+  }
+
+  .filter_list {
+    padding: 15px;
+    color: aliceblue;
+  }
+
+  .filter_list ul{
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+  }
+
+  .filter_list ul li{
+    width: 33%;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+   }
+
+   .btn_filter_close{
+    margin-left: 10px;
+    background: none;
+    color: aliceblue;
+    border: 2px solid aliceblue;
+    border-radius: 50%;
+   }
+
+  
+
+    /* ------------------------
+            RECIPË
+  --------------------------*/
+
+  .recipe_container{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .recipe_content {
+    margin-top: 25px;
+  }
+
+  .recipe_content_top{
+    width: 380px;
+    height: 178px;
+    background-image: url('./assets/recipe.jpg');
+    background-size: cover;
+  }
+
+  .recipe_content_bot{
+    width: 380px;
+    height: 186px;
+    background-color: #E7E7E7;
+    padding: 15px;
+    overflow: auto;
+  }
+
+  .recipe_bot_title{
+    display: flex;
+  justify-content: space-between; 
+}
+
+.recipe_bot_title h3{
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+.recipe_bot_infos {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.recipe_infos_description{
+  width: 50%;
+  text-align: justify;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+    /* ------------------------
+           OPTION FILTER
+  --------------------------*/
+
+  .optin1_list{
+    
+  }
+
+
+  .optin_list_ul{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+
+        
+  }
+  
+  .optin_list_ul li {
+    width: 100%;
+    padding-top: 5px;
+    padding: 10px;
+    z-index: 2;
+  }
