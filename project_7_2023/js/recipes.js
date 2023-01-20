@@ -29,11 +29,26 @@ let objTemoin = {
     ustensils: []
 }
 
-console.log(objTemoin)
 
   /* ------------------------
             SEARCH TOOL
   --------------------------*/
+function selectRecipe() {
+  selectedRecipe = recipesArray;
+  filterRecipe = [];
+
+
+  for(let i = 0; i < selectedRecipe.length; i++){
+    if(selectedRecipe[i].name.includes(objTemoin.tilte)
+
+   )
+   {
+      filterRecipe.push(selectedRecipe[i])
+    } 
+
+  }
+  console.log(filterRecipe)
+}
 
 
   /* ------------------------
@@ -163,7 +178,9 @@ function setRecipes(element){
   }
     objTemoin.ingredient.push(optionObj.value);
     console.log(objTemoin)
+    console.log(objTemoin.ingredient)
     setAllFilter()
+    selectRecipe()
   }
   //Function FILTRE 2
   function getFilter2(event) {
@@ -175,6 +192,7 @@ function setRecipes(element){
   objTemoin.appliance.push(optionObj.value);
   console.log(objTemoin)
     setAllFilter()
+    selectRecipe()
   }
   //Function FILTRE 3
   function getFilter3(event) {
@@ -243,6 +261,7 @@ function searchBar(){
     }
 
     console.log(objTemoin)
+    selectRecipe()
   });
 }
 searchBar()
@@ -340,3 +359,4 @@ console.log(ingredientArray)
   inputFilter1()
   inputFilter2()
   inputFilter3()
+

@@ -15,6 +15,7 @@ html,body,p,ol,ul,li,dl,dt,dd,blockquote,figure,fieldset,legend,textarea,pre,ifr
 
 html {
     width: 100%;
+    font-family: 'DM Sans', sans-serif;
 }
 
 .general_container {
