@@ -34,20 +34,79 @@ let objTemoin = {
             SEARCH TOOL
   --------------------------*/
 function selectRecipe() {
+  //Variable list
+  const recipesContainer = document.querySelector('#recipe_container')
   selectedRecipe = recipesArray;
   filterRecipe = [];
+  injectRecipe = ""
+ 
 
-
+//Boucle sur chaque recette avec "for"
   for(let i = 0; i < selectedRecipe.length; i++){
+    //Si l'élément entrer correpond au titre ou description
     if(selectedRecipe[i].name.includes(objTemoin.tilte)
-
+    || selectedRecipe[i].description.includes(objTemoin.tilte)
    )
    {
-      filterRecipe.push(selectedRecipe[i])
+      let ingredientTest = []
+
+      selectedRecipe[i].ingredients.forEach(recipe => ingredientTest.push(recipe.ingredient.toLowerCase()))
+      //Si les filtres ingrédients correspondent aux ingrédients de la recette alors
+      if(objTemoin.ingredient.every(elem => ingredientTest.includes(elem))){
+        console.log("CHECK")
+
+        //Si les filtres appliance correspondent aux ingrédients de la recette alors
+        if(selectedRecipe[i].appliance.toLowerCase().includes(objTemoin.appliance)){
+          console.log("CHECK2")
+
+          if(objTemoin.ustensils.every(elem => selectedRecipe[i].ustensils.includes(elem))){
+            filterRecipe.push(selectedRecipe[i]);
+            console.log("CHECK3")
+          }
+        }
+      }
     } 
 
   }
   console.log(filterRecipe)
+  if(filterRecipe.length != 0) {
+    filterRecipe.forEach(element =>{
+      //Isole les ingrédients de la recette 
+    let ingredientElementList = ""
+    element.ingredients.forEach(allIngredient => {
+      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
+        })
+
+      injectRecipe += ` 
+      <div class="recipe_content">
+      <div class="recipe_content_top">
+    
+      </div>
+    
+      <div class="recipe_content_bot">
+        <div class="recipe_bot_title">
+        <h3>${element.name}</h3>
+        <div>🕒 <span class="bold">${element.time} min</span></div>
+        </div>
+    
+        <div class="recipe_bot_infos">
+          <ul>
+            ${ingredientElementList}
+          </ul>
+    
+          <div class="recipe_infos_description">${element.description}</div>
+        
+        </div>
+      </div>
+    </div>
+      `
+    })
+
+    recipesContainer.innerHTML = injectRecipe
+  } else {
+    injectRecipe = " <p>Aucune recette ne correspond à votre critère… vous pouvez chercher 'tarte aux pommes', 'poisson' etc ... </p"
+    recipesContainer.innerHTML = injectRecipe
+  }
 }
 
 
@@ -128,7 +187,7 @@ function setRecipes(element){
 
 //Isole les ingrédients de la recette 
     let ingredientElementList = ""
-    element.ingredients.forEach( allIngredient => {
+    element.ingredients.forEach(allIngredient => {
       ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
         })
 
@@ -204,6 +263,7 @@ function setRecipes(element){
   objTemoin.ustensils.push(optionObj.value);
   console.log(objTemoin)
     setAllFilter()
+    selectRecipe()
   }
 
   //Function pour injecter les filtres
@@ -242,6 +302,7 @@ function setRecipes(element){
   });
 
     setAllFilter()
+    selectRecipe()
 
   }
 
@@ -252,17 +313,17 @@ function setRecipes(element){
 function searchBar(){
   const searchBarDom = document.querySelector("#searchbar")
 
-  searchBarDom.addEventListener("change", function(e) {
+  searchBarDom.addEventListener("keyup", function(e) {
     e.preventDefault()
     objTemoin.tilte = searchBarDom.value;
-
+  if(objTemoin.tilte.length > 2){
     if(objTemoin.tilte == '') {
       objTemoin.tilte = null
     }
 
     console.log(objTemoin)
     selectRecipe()
-  });
+  } });
 }
 searchBar()
 console.log("Loaded")
@@ -359,4 +420,6 @@ console.log(ingredientArray)
   inputFilter1()
   inputFilter2()
   inputFilter3()
+
+
 
