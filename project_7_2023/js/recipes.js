@@ -39,13 +39,16 @@ function selectRecipe() {
   selectedRecipe = recipesArray;
   filterRecipe = [];
   injectRecipe = ""
+  allRecipe = []
  
 
 //Boucle sur chaque recette avec "for"
   for(let i = 0; i < selectedRecipe.length; i++){
+
     //Si l'élément entrer correpond au titre ou description
     if(selectedRecipe[i].name.includes(objTemoin.tilte)
     || selectedRecipe[i].description.includes(objTemoin.tilte)
+    || objTemoin.tilte == null
    )
    {
       let ingredientTest = []
@@ -55,7 +58,7 @@ function selectRecipe() {
       if(objTemoin.ingredient.every(elem => ingredientTest.includes(elem))){
         console.log("CHECK")
 
-        //Si les filtres appliance correspondent aux ingrédients de la recette alors
+        //Si les filtres appliance correspondent aux appliance de la recette alors
         if(selectedRecipe[i].appliance.toLowerCase().includes(objTemoin.appliance)){
           console.log("CHECK2")
 
@@ -68,7 +71,10 @@ function selectRecipe() {
     } 
 
   }
+
+
   console.log(filterRecipe)
+//Si l'utilisateur a entrer plus de 3 lettres dans la bar et si une recette existe
   if(filterRecipe.length != 0) {
     filterRecipe.forEach(element =>{
       //Isole les ingrédients de la recette 
@@ -76,7 +82,7 @@ function selectRecipe() {
     element.ingredients.forEach(allIngredient => {
       ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
         })
-
+//Genere les recettes
       injectRecipe += ` 
       <div class="recipe_content">
       <div class="recipe_content_top">
@@ -101,13 +107,14 @@ function selectRecipe() {
     </div>
       `
     })
-
+//Injecte la recette
     recipesContainer.innerHTML = injectRecipe
   } else {
-    injectRecipe = " <p>Aucune recette ne correspond à votre critère… vous pouvez chercher 'tarte aux pommes', 'poisson' etc ... </p"
-    recipesContainer.innerHTML = injectRecipe
+    //Réinitialise les recettes
+    recipesContainer.innerHTML = recipesList
   }
 }
+
 
 
   /* ------------------------
@@ -218,7 +225,6 @@ function setRecipes(element){
 //Injecte dans le DOM  
   recipesContainer.innerHTML = recipesList
 
-
 }
   /* ------------------------
             FUNCTION FRONT
@@ -317,13 +323,18 @@ function searchBar(){
     e.preventDefault()
     objTemoin.tilte = searchBarDom.value;
   if(objTemoin.tilte.length > 2){
+    selectRecipe()
     if(objTemoin.tilte == '') {
       objTemoin.tilte = null
     }
-
     console.log(objTemoin)
+    }
+
+  if(objTemoin.tilte.length == 0){
     selectRecipe()
-  } });
+  }
+
+  });
 }
 searchBar()
 console.log("Loaded")
