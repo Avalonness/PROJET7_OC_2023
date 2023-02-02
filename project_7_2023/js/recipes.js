@@ -1,7 +1,4 @@
 let recipesArray = [];
-let ingredientArray = [];
-let appliancetArray = [];
-let ustensilsArray = [];
 let recipesList = ""
 let sortIngredientArray = []
 let sortApplianceArray = []
@@ -15,9 +12,7 @@ const res = fetch("https://raw.githubusercontent.com/Avalonness/P11-front-end-se
 //Function générale
 function getRecipes(data){
     data.recipes.forEach(element => 
-        {setIngredients(element);
-        setAppliance(element.appliance);
-        setUstensils(element.ustensils)
+        {
         setRecipes(element)
       });
 
@@ -138,114 +133,14 @@ function selectRecipe() {
 }
 
 
-
-  /* ------------------------
-            INGREDIENT
-  --------------------------*/
-//Permet de sélectionner les ingrédients uniques dans les recettes et les injecter
-function setIngredients(element) {
-    let ingredientList = "";
-    const list1 = document.querySelector('#list_one')
-
-    element.ingredients.forEach( allIngredient => {
-    if (!ingredientArray.includes(allIngredient.ingredient.toLowerCase())) {
-        ingredientArray.push(allIngredient.ingredient.toLowerCase());
-    }
-      })
-//Tri tous les élément dans un ordre alphabétique
-      ingredientArray.sort(function (a, b) {
-        return a.localeCompare(b);
-      });
-//Injecte les éléments dans le dom
-      ingredientArray.forEach(ingredient => ingredientList +=`<li onclick="getFilter1(event)">${ingredient}</li>`)
-      list1.innerHTML = ingredientList
-}
-
-  /* ------------------------
-            Appareil
-  --------------------------*/
-//Permet de sélectionner les appareil uniques dans les recettes et les injecter
-function setAppliance(element) {
-    let  applianceList = "";
-    const list2 = document.querySelector('#list_two')
-
-    if (!appliancetArray.includes(element.toLowerCase())) {
-        appliancetArray.push(element.toLowerCase());
-    }
-//Tri tous les élément dans un ordre alphabétique
-    appliancetArray.sort(function (a, b) {
-        return a.localeCompare(b);
-      });
-
-//Injecte les éléments dans le dom
-appliancetArray.forEach(appli => applianceList +=`<li onclick="getFilter2(event)">${appli}</li>`)
-    list2.innerHTML = applianceList
-}
-
-  /* ------------------------
-            USTENSILES
-  --------------------------*/
-function setUstensils(element) {
-  let ustensilsList = "";
-  const list3 = document.querySelector('#list_three')
-
-  element.forEach( allUstensils => { 
-
-      if (!ustensilsArray.includes(allUstensils.toLowerCase())) {
-        ustensilsArray.push(allUstensils.toLowerCase());
-    }
-    })
-//Tri tous les élément dans un ordre alphabétique
-      ustensilsArray.sort(function (a, b) {
-      return a.localeCompare(b);
-    });
-//Injecte les éléments dans le dom
-    ustensilsArray.forEach(ustensils => ustensilsList +=`<li onclick="getFilter3(event)" ">${ustensils}</li>`)
-    list3.innerHTML = ustensilsList
-}
-
   /* ------------------------
             ALL RECIPES
   --------------------------*/
 function setRecipes(element){
-    
-    const recipesContainer = document.querySelector('#recipe_container')
-
 //Compile les recettes dans un tableau en même temps (utilisé pour la recherche)
     recipesArray.push(element)
 
-//Isole les ingrédients de la recette 
-    let ingredientElementList = ""
-    element.ingredients.forEach(allIngredient => {
-      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
-        })
-
-//Setup de la recette dans le code html
-    recipesList += ` 
-    <div class="recipe_content">
-    <div class="recipe_content_top">
-  
-    </div>
-  
-    <div class="recipe_content_bot">
-      <div class="recipe_bot_title">
-      <h3>${element.name}</h3>
-      <div>🕒 <span class="bold">${element.time} min</span></div>
-      </div>
-  
-      <div class="recipe_bot_infos">
-        <ul>
-          ${ingredientElementList}
-        </ul>
-  
-        <div class="recipe_infos_description">${element.description}</div>
-      
-      </div>
-    </div>
-  </div>
-    `
-//Injecte dans le DOM  
-  recipesContainer.innerHTML = recipesList
+    selectRecipe()
 
 }
   /* ------------------------
@@ -362,7 +257,7 @@ function searchBar(){
 }
 searchBar()
 console.log("Loaded")
-console.log(ingredientArray)
+
 
 /* ------------------------
             INPUT FILTER
@@ -378,7 +273,7 @@ console.log(ingredientArray)
       let searchFilter1List = ""
       e.preventDefault()
 //Compare tous les ingrédients à l'input
-      ingredientArray.forEach( ingredient => {
+      sortIngredientArray.forEach( ingredient => {
         if (ingredient.includes(inupt1.value)) {
           protoIngredient.push(ingredient);
       } 
@@ -406,7 +301,7 @@ console.log(ingredientArray)
       let searchFilter2List = ""
       e.preventDefault()
 
-      appliancetArray.forEach( appliance => {
+      sortApplianceArray.forEach( appliance => {
         if (appliance.includes(inupt2.value)) {
           protoAppliance.push(appliance);
       } 
@@ -434,7 +329,7 @@ console.log(ingredientArray)
       let searchFilter3List = ""
       e.preventDefault()
 
-      ustensilsArray.forEach( ustensil => {
+     sortUstensilArray.forEach( ustensil => {
         if (ustensil.includes(inupt3.value)) {
           protoUstensil.push(ustensil);
       } 
@@ -474,7 +369,7 @@ console.log(ingredientArray)
     console.log(array)
   }
 
-//Inject les ingrédients
+//Injecte les ingrédients
   function setIngredientsSort(element){
     let ingredientListSort = "";
     const list1 = document.querySelector('#list_one')
@@ -483,6 +378,7 @@ console.log(ingredientArray)
       list1.innerHTML = ingredientListSort
   }
 
+//Inject les Appliances
   function setApplianceSort(element){
     let applianceListSort = "";
     const list2 = document.querySelector('#list_two')
@@ -491,7 +387,7 @@ console.log(ingredientArray)
     list2.innerHTML = applianceListSort
   }
 
-  //Inject les ingrédients
+  //Inject les ustensiles
   function setUstensilsSort(element){
     let ustensilsListSort = "";
     const list3 = document.querySelector('#list_three')
