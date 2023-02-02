@@ -3,6 +3,10 @@ let ingredientArray = [];
 let appliancetArray = [];
 let ustensilsArray = [];
 let recipesList = ""
+let sortIngredientArray = []
+let sortApplianceArray = []
+let sortUstensilArray = []
+
 
 const res = fetch("https://raw.githubusercontent.com/Avalonness/P11-front-end-search-engine/master/recipes.json")
     .then(res => res.json())
@@ -41,6 +45,9 @@ function selectRecipe() {
   filterRecipe = [];
   injectRecipe = ""
   allRecipe = []
+  sortIngredientArray = []
+  sortApplianceArray = []
+  sortUstensilArray = []
  
 
 //Boucle sur chaque recette avec "for"
@@ -77,11 +84,21 @@ function selectRecipe() {
   console.log(filterRecipe)
 //Si l'utilisateur a entrer plus de 3 lettres dans la bar et si une recette existe
   if(filterRecipe.length != 0) {
+
+
     filterRecipe.forEach(element =>{
+
+      setElementSort(element.appliance, sortApplianceArray)
+
+      element.ustensils.forEach(allUstensils => {
+        setElementSort(allUstensils, sortUstensilArray)
+      })
       //Isole les ingrédients de la recette 
     let ingredientElementList = ""
+
     element.ingredients.forEach(allIngredient => {
-      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
+      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`;
+      setElementSort(allIngredient.ingredient, sortIngredientArray)
         })
 //Genere les recettes
       injectRecipe += ` 
@@ -110,6 +127,9 @@ function selectRecipe() {
     })
 //Injecte la recette
     recipesContainer.innerHTML = injectRecipe
+    setIngredientsSort(sortIngredientArray)
+    setUstensilsSort(sortUstensilArray)
+    setApplianceSort(sortApplianceArray)
   } else {
     //Réinitialise les recettes
     errorContainer.innerHTML = "<p> Aucune recette ne correspond à votre critère… vous pouvez chercher 'tarte aux pommes', 'poisson', etc.</p>";
@@ -435,6 +455,51 @@ console.log(ingredientArray)
   inputFilter1()
   inputFilter2()
   inputFilter3()
+
+  /* ------------------------
+            OUTIL DE TRI 
+            INGREDIENT
+  --------------------------*/
+
+//Permet de trier les éléments suivant les recettes recherché
+  function setElementSort(element, array){
+    if(!array.includes(element.toLowerCase())) {
+      array.push(element.toLowerCase())
+    }
+
+    array.sort(function (a, b) {
+      return a.localeCompare(b);
+    });
+
+    console.log(array)
+  }
+
+//Inject les ingrédients
+  function setIngredientsSort(element){
+    let ingredientListSort = "";
+    const list1 = document.querySelector('#list_one')
+
+    element.forEach(ingredient => ingredientListSort +=`<li onclick="getFilter1(event)">${ingredient}</li>`)
+      list1.innerHTML = ingredientListSort
+  }
+
+  function setApplianceSort(element){
+    let applianceListSort = "";
+    const list2 = document.querySelector('#list_two')
+
+    element.forEach(appliance => applianceListSort +=`<li onclick="getFilter2(event)">${appliance}</li>`)
+    list2.innerHTML = applianceListSort
+  }
+
+  //Inject les ingrédients
+  function setUstensilsSort(element){
+    let ustensilsListSort = "";
+    const list3 = document.querySelector('#list_three')
+
+    element.forEach(ustensils => ustensilsListSort +=`<li onclick="getFilter3(event)">${ustensils}</li>`)
+      list3.innerHTML = ustensilsListSort
+  }
+  
 
 
 
