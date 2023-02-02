@@ -36,6 +36,7 @@ let objTemoin = {
 function selectRecipe() {
   //Variable list
   const recipesContainer = document.querySelector('#recipe_container')
+  const errorContainer = document.querySelector('#error_search')
   selectedRecipe = recipesArray;
   filterRecipe = [];
   injectRecipe = ""
@@ -111,7 +112,8 @@ function selectRecipe() {
     recipesContainer.innerHTML = injectRecipe
   } else {
     //Réinitialise les recettes
-    recipesContainer.innerHTML = recipesList
+    errorContainer.innerHTML = "<p> Aucune recette ne correspond à votre critère… vous pouvez chercher 'tarte aux pommes', 'poisson', etc.</p>";
+    recipesContainer.innerHTML = recipesList;
   }
 }
 
@@ -318,6 +320,7 @@ function setRecipes(element){
 
 function searchBar(){
   const searchBarDom = document.querySelector("#searchbar")
+  const errorContainer = document.querySelector('#error_search')
 
   searchBarDom.addEventListener("keyup", function(e) {
     e.preventDefault()
@@ -332,6 +335,7 @@ function searchBar(){
 
   if(objTemoin.tilte.length == 0){
     selectRecipe()
+    errorContainer.innerHTML = "<p> </p>"
   }
 
   });
