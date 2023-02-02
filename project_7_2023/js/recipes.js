@@ -1,8 +1,9 @@
 let recipesArray = [];
-let ingredientArray = [];
-let appliancetArray = [];
-let ustensilsArray = [];
 let recipesList = ""
+let sortIngredientArray = []
+let sortApplianceArray = []
+let sortUstensilArray = []
+
 
 const res = fetch("https://raw.githubusercontent.com/Avalonness/P11-front-end-search-engine/master/recipes.json")
     .then(res => res.json())
@@ -11,9 +12,7 @@ const res = fetch("https://raw.githubusercontent.com/Avalonness/P11-front-end-se
 //Function générale
 function getRecipes(data){
     data.recipes.forEach(element => 
-        {setIngredients(element);
-        setAppliance(element.appliance);
-        setUstensils(element.ustensils)
+        {
         setRecipes(element)
       });
 
@@ -41,47 +40,60 @@ function selectRecipe() {
   filterRecipe = [];
   injectRecipe = ""
   allRecipe = []
+  sortIngredientArray = []
+  sortApplianceArray = []
+  sortUstensilArray = []
  
 
 //Boucle sur chaque recette avec "for"
-  for(let i = 0; i < selectedRecipe.length; i++){
+selectedRecipe.forEach(recipe => {
 
     //Si l'élément entrer correpond au titre ou description
-    if(selectedRecipe[i].name.includes(objTemoin.tilte)
-    || selectedRecipe[i].description.includes(objTemoin.tilte)
+    if(recipe.name.includes(objTemoin.tilte)
+    || recipe.description.includes(objTemoin.tilte)
     || objTemoin.tilte == null
    )
    {
       let ingredientTest = []
 
-      selectedRecipe[i].ingredients.forEach(recipe => ingredientTest.push(recipe.ingredient.toLowerCase()))
+      recipe.ingredients.forEach(thisRecipe => ingredientTest.push(thisRecipe.ingredient.toLowerCase()))
       //Si les filtres ingrédients correspondent aux ingrédients de la recette alors
       if(objTemoin.ingredient.every(elem => ingredientTest.includes(elem))){
         console.log("CHECK")
 
         //Si les filtres appliance correspondent aux appliance de la recette alors
-        if(selectedRecipe[i].appliance.toLowerCase().includes(objTemoin.appliance)){
+        if(recipe.appliance.toLowerCase().includes(objTemoin.appliance)){
           console.log("CHECK2")
 
-          if(objTemoin.ustensils.every(elem => selectedRecipe[i].ustensils.includes(elem))){
-            filterRecipe.push(selectedRecipe[i]);
+          if(objTemoin.ustensils.every(elem => recipe.ustensils.includes(elem))){
+            filterRecipe.push(recipe);
             console.log("CHECK3")
           }
         }
       }
     } 
 
-  }
+  })
 
 
   console.log(filterRecipe)
 //Si l'utilisateur a entrer plus de 3 lettres dans la bar et si une recette existe
   if(filterRecipe.length != 0) {
+
+
     filterRecipe.forEach(element =>{
+
+      setElementSort(element.appliance, sortApplianceArray)
+
+      element.ustensils.forEach(allUstensils => {
+        setElementSort(allUstensils, sortUstensilArray)
+      })
       //Isole les ingrédients de la recette 
     let ingredientElementList = ""
+
     element.ingredients.forEach(allIngredient => {
-      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
+      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`;
+      setElementSort(allIngredient.ingredient, sortIngredientArray)
         })
 //Genere les recettes
       injectRecipe += ` 
@@ -110,6 +122,9 @@ function selectRecipe() {
     })
 //Injecte la recette
     recipesContainer.innerHTML = injectRecipe
+    setIngredientsSort(sortIngredientArray)
+    setUstensilsSort(sortUstensilArray)
+    setApplianceSort(sortApplianceArray)
   } else {
     //Réinitialise les recettes
     errorContainer.innerHTML = "<p> Aucune recette ne correspond à votre critère… vous pouvez chercher 'tarte aux pommes', 'poisson', etc.</p>";
@@ -118,114 +133,14 @@ function selectRecipe() {
 }
 
 
-
-  /* ------------------------
-            INGREDIENT
-  --------------------------*/
-//Permet de sélectionner les ingrédients uniques dans les recettes et les injecter
-function setIngredients(element) {
-    let ingredientList = "";
-    const list1 = document.querySelector('#list_one')
-
-    element.ingredients.forEach( allIngredient => {
-    if (!ingredientArray.includes(allIngredient.ingredient.toLowerCase())) {
-        ingredientArray.push(allIngredient.ingredient.toLowerCase());
-    }
-      })
-//Tri tous les élément dans un ordre alphabétique
-      ingredientArray.sort(function (a, b) {
-        return a.localeCompare(b);
-      });
-//Injecte les éléments dans le dom
-      ingredientArray.forEach(ingredient => ingredientList +=`<li onclick="getFilter1(event)">${ingredient}</li>`)
-      list1.innerHTML = ingredientList
-}
-
-  /* ------------------------
-            Appareil
-  --------------------------*/
-//Permet de sélectionner les appareil uniques dans les recettes et les injecter
-function setAppliance(element) {
-    let  applianceList = "";
-    const list2 = document.querySelector('#list_two')
-
-    if (!appliancetArray.includes(element.toLowerCase())) {
-        appliancetArray.push(element.toLowerCase());
-    }
-//Tri tous les élément dans un ordre alphabétique
-    appliancetArray.sort(function (a, b) {
-        return a.localeCompare(b);
-      });
-
-//Injecte les éléments dans le dom
-appliancetArray.forEach(appli => applianceList +=`<li onclick="getFilter2(event)">${appli}</li>`)
-    list2.innerHTML = applianceList
-}
-
-  /* ------------------------
-            USTENSILES
-  --------------------------*/
-function setUstensils(element) {
-  let ustensilsList = "";
-  const list3 = document.querySelector('#list_three')
-
-  element.forEach( allUstensils => { 
-
-      if (!ustensilsArray.includes(allUstensils.toLowerCase())) {
-        ustensilsArray.push(allUstensils.toLowerCase());
-    }
-    })
-//Tri tous les élément dans un ordre alphabétique
-      ustensilsArray.sort(function (a, b) {
-      return a.localeCompare(b);
-    });
-//Injecte les éléments dans le dom
-    ustensilsArray.forEach(ustensils => ustensilsList +=`<li onclick="getFilter3(event)" ">${ustensils}</li>`)
-    list3.innerHTML = ustensilsList
-}
-
   /* ------------------------
             ALL RECIPES
   --------------------------*/
 function setRecipes(element){
-    
-    const recipesContainer = document.querySelector('#recipe_container')
-
 //Compile les recettes dans un tableau en même temps (utilisé pour la recherche)
     recipesArray.push(element)
 
-//Isole les ingrédients de la recette 
-    let ingredientElementList = ""
-    element.ingredients.forEach(allIngredient => {
-      ingredientElementList +=`<li><span class="bold">${allIngredient.ingredient}</span> ${allIngredient.quantity ? allIngredient.quantity : " "} ${allIngredient.unit ? allIngredient.unit : " "}</li>`
-        })
-
-//Setup de la recette dans le code html
-    recipesList += ` 
-    <div class="recipe_content">
-    <div class="recipe_content_top">
-  
-    </div>
-  
-    <div class="recipe_content_bot">
-      <div class="recipe_bot_title">
-      <h3>${element.name}</h3>
-      <div>🕒 <span class="bold">${element.time} min</span></div>
-      </div>
-  
-      <div class="recipe_bot_infos">
-        <ul>
-          ${ingredientElementList}
-        </ul>
-  
-        <div class="recipe_infos_description">${element.description}</div>
-      
-      </div>
-    </div>
-  </div>
-    `
-//Injecte dans le DOM  
-  recipesContainer.innerHTML = recipesList
+    selectRecipe()
 
 }
   /* ------------------------
@@ -342,7 +257,7 @@ function searchBar(){
 }
 searchBar()
 console.log("Loaded")
-console.log(ingredientArray)
+
 
 /* ------------------------
             INPUT FILTER
@@ -358,7 +273,7 @@ console.log(ingredientArray)
       let searchFilter1List = ""
       e.preventDefault()
 //Compare tous les ingrédients à l'input
-      ingredientArray.forEach( ingredient => {
+      sortIngredientArray.forEach( ingredient => {
         if (ingredient.includes(inupt1.value)) {
           protoIngredient.push(ingredient);
       } 
@@ -386,7 +301,7 @@ console.log(ingredientArray)
       let searchFilter2List = ""
       e.preventDefault()
 
-      appliancetArray.forEach( appliance => {
+      sortApplianceArray.forEach( appliance => {
         if (appliance.includes(inupt2.value)) {
           protoAppliance.push(appliance);
       } 
@@ -414,7 +329,7 @@ console.log(ingredientArray)
       let searchFilter3List = ""
       e.preventDefault()
 
-      ustensilsArray.forEach( ustensil => {
+     sortUstensilArray.forEach( ustensil => {
         if (ustensil.includes(inupt3.value)) {
           protoUstensil.push(ustensil);
       } 
@@ -436,5 +351,48 @@ console.log(ingredientArray)
   inputFilter2()
   inputFilter3()
 
+  /* ------------------------
+            OUTIL DE TRI 
+            INGREDIENT
+  --------------------------*/
 
+//Permet de trier les éléments suivant les recettes recherché
+  function setElementSort(element, array){
+    if(!array.includes(element.toLowerCase())) {
+      array.push(element.toLowerCase())
+    }
 
+    array.sort(function (a, b) {
+      return a.localeCompare(b);
+    });
+
+    console.log(array)
+  }
+
+//Injecte les ingrédients
+  function setIngredientsSort(element){
+    let ingredientListSort = "";
+    const list1 = document.querySelector('#list_one')
+
+    element.forEach(ingredient => ingredientListSort +=`<li onclick="getFilter1(event)">${ingredient}</li>`)
+      list1.innerHTML = ingredientListSort
+  }
+
+//Inject les Appliances
+  function setApplianceSort(element){
+    let applianceListSort = "";
+    const list2 = document.querySelector('#list_two')
+
+    element.forEach(appliance => applianceListSort +=`<li onclick="getFilter2(event)">${appliance}</li>`)
+    list2.innerHTML = applianceListSort
+  }
+
+  //Inject les ustensiles
+  function setUstensilsSort(element){
+    let ustensilsListSort = "";
+    const list3 = document.querySelector('#list_three')
+
+    element.forEach(ustensils => ustensilsListSort +=`<li onclick="getFilter3(event)">${ustensils}</li>`)
+      list3.innerHTML = ustensilsListSort
+  }
+  
