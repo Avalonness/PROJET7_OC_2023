@@ -49,8 +49,9 @@ function selectRecipe() {
   for(let i = 0; i < selectedRecipe.length; i++){
 
     //Si l'élément entrer correpond au titre ou description
-    if(selectedRecipe[i].name.includes(objTemoin.tilte)
+    if(selectedRecipe[i].name.toLowerCase().includes(objTemoin.tilte)
     || selectedRecipe[i].description.includes(objTemoin.tilte)
+    || selectedRecipe[i].ingredients.includes(objTemoin.tilte)
     || objTemoin.tilte == null
    )
    {
@@ -395,7 +396,3 @@ console.log("Loaded")
     element.forEach(ustensils => ustensilsListSort +=`<li onclick="getFilter3(event)">${ustensils}</li>`)
       list3.innerHTML = ustensilsListSort
   }
-  
-
-
-
